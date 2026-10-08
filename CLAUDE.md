@@ -10,7 +10,7 @@ It started as a tool for one of Dan's friends and is now generalized for anyone 
 
 - **No build step.** Plain HTML, CSS, and ES modules. The Supabase SDK is a pinned CDN import in `cloud.js`. Don't add npm, bundlers, or frameworks unless Dan asks.
 - **Local-only must keep working.** With `js/config.js` empty, there's no login and no network use beyond fonts and ATS reads. Test both modes when you touch boot, store, or docs.
-- **Never commit real or local keys in `js/config.js`.** It ships empty. Dan fills it in for production. For local testing, set it temporarily and revert before committing.
+- **`js/config.js` holds the production project** (`wncojuifyehtgflruvlt`, Dan's personal Supabase org) and its anon key. That key is public by design; RLS protects the data. Never commit the local stack's URL or key, and never put a `service_role` or `sb_secret_` key anywhere in the repo. For local testing, swap in the local values temporarily and restore the production ones before committing.
 - **Privacy.** No analytics and no third-party scripts. Outbound requests are limited to:
   - Google Fonts
   - Supabase (the person's own data, when signed in)
