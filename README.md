@@ -29,20 +29,24 @@ A job-search field guide. It started as a tool for one friend and now works for 
 
 In accounts mode, row-level security limits every row and file to its owner. I tested this against a local Supabase stack: a second user sees zero rows, can't download the first user's files, and can't overwrite their workspace. Signed-out visitors read nothing.
 
-## Turn on accounts (one-time, about 15 minutes)
+## Turn on accounts (one-time, about 20 minutes)
 
 1. **Create a Supabase project** at <https://supabase.com> (the free tier is fine).
 2. **Create the tables.** Open the **SQL Editor**, paste in [`supabase/migrations/20261008000000_init.sql`](supabase/migrations/20261008000000_init.sql), and run it. Or use the CLI: `supabase link` then `supabase db push`.
 3. **Make it invite-only.** Under **Authentication → Sign In / Providers**, turn **off** "Allow new users to sign up". Leave the Email provider **on**.
-4. **Allow the site's URLs.** Under **Authentication → URL Configuration**, set **Site URL** to `https://<you>.github.io/next-move/`. Add that URL and `http://localhost:4317/` to **Redirect URLs**.
+4. **Allow the site's URLs.** Under **Authentication → URL Configuration**, set **Site URL** to `https://cdanwards.github.io/next-move/`. Add `https://cdanwards.github.io/next-move/**` and `http://localhost:4317/**` to **Redirect URLs**.
 5. **Update the email templates.** Under **Authentication → Emails**, replace **Magic Link** with [`supabase/templates/magic_link.html`](supabase/templates/magic_link.html). It adds the 6-digit code, so people can sign in on a phone without opening the link there. Replace **Invite user** with [`supabase/templates/invite.html`](supabase/templates/invite.html).
 6. **Paste in the keys.** Copy the **Project URL** and the **anon / publishable key** (Project Settings → API) into [`js/config.js`](js/config.js), then commit and push. The anon key is meant to be public; row-level security is what protects the data.
-7. **Invite people.** Under **Authentication → Users → Add user**, you have two options:
+7. **Set up email delivery (required).** Supabase's built-in sender only delivers to members of your Supabase team, at 2 emails an hour, so invited friends would never get their code. Under **Authentication → Emails → SMTP Settings**, add your own provider:
+   - **If you own a domain:** Resend, Postmark, or Amazon SES. Verify the domain with the provider so mail doesn't land in spam.
+   - **If you don't:** Gmail SMTP with an app password (`smtp.gmail.com`, port 587; needs 2-step verification), or Brevo with a single verified sender address. These work, but sign-in emails are more likely to land in spam, so tell people to check.
+
+   With custom SMTP, the limit goes to 30 emails an hour (adjustable under **Authentication → Rate Limits**).
+8. **Invite people.** Under **Authentication → Users → Add user**, you have two options:
    - **Send invitation.** They tap the link in the email once. After that they sign in with a code.
    - **Create new user** with **Auto Confirm User** checked. Then send them the site link, and they sign in with a code. No invite email is involved.
 
 **Things to know**
-- Supabase's built-in email sender only allows a few emails per hour and is meant for testing. For more than a handful of people, set up custom SMTP under **Authentication → SMTP Settings** (Resend, Postmark, etc.).
 - Free-tier projects pause after about a week with no activity. Daily use keeps it awake; if it does pause, restore it from the dashboard.
 - Someone who was invited but never tapped the invite link can't sign in with a code yet. The sign-in screen tells them to tap the link first.
 
