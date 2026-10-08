@@ -30,7 +30,7 @@ It started as a tool for one of Dan's friends and is now generalized for anyone 
   - **Only compare server timestamps.** A trigger sets `updated_at` to `now()` on every write, and `pushWorkspace` returns that stamp. Client clocks drift (this bit us once).
   - **On focus or visibility, pull** if the server stamp is newer and there are no local unsynced edits. If both changed, `enterWorkspace` asks which version to keep.
 - **Auth callbacks.** Defer work in `onAuthStateChange` with `setTimeout`; calling Supabase inside the callback can deadlock.
-- **Invite-only setup.** `[auth] enable_signup = false` does the work. Keep `[auth.email] enable_signup = true`: in the CLI it toggles the email provider itself ("Email logins are disabled").
+- **Invite-only setup.** The app calls `signInWithOtp` with `shouldCreateUser: false`, so its UI never creates accounts. Locally, `[auth] enable_signup = false` also blocks API sign-ups. On the live project Dan chose to leave sign-ups **on** (2026-10-08), so accounts can be created by calling the API directly. Don't change that without asking. Keep `[auth.email] enable_signup = true`: in the CLI it toggles the email provider itself ("Email logins are disabled").
 - **Invited users.** Until they click the invite link they're unconfirmed, and code sign-in rejects them. The alternative is creating users with auto-confirm.
 - **Navigation.** Use `go(hash)` instead of `location.hash =`. Setting the same hash fires no `hashchange`, which once left the setup page stuck.
 - **Public routes.** `#/send` stays public so friends can send leads. `#/lead` and `#/import` payloads are saved to `nextmove:returnTo` and restored after sign-in.
