@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Next Move</title>
+    <meta name="description" content="A private job-search field guide: find roles, score the fit, track the pipeline, keep your documents and thoughts in one place." />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#F3EEE4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#151410" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23E8541E'/%3E%3Cpath d='M9 22V10l7 7 7-7v12' stroke='%23F3EEE4' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="rail">
+        <a class="wordmark" href="#/brief" aria-label="Next Move home">
+          <span class="wordmark-top">Next</span>
+          <span class="wordmark-bottom">Move<span class="wordmark-dot">.</span></span>
+        </a>
+        <p class="rail-tag">A field guide to the job worth having.</p>
+        <nav class="nav" aria-label="Sections">
+          <a href="#/brief" data-route="brief"><span class="num">01</span>Brief</a>
+          <a href="#/scout" data-route="scout"><span class="num">02</span>Scout</a>
+          <a href="#/board" data-route="board"><span class="num">03</span>Board</a>
+          <a href="#/journal" data-route="journal"><span class="num">04</span>Journal</a>
+          <a href="#/files" data-route="files"><span class="num">05</span>Files</a>
+          <a href="#/setup" data-route="setup"><span class="num">06</span>Setup</a>
+        </nav>
+        <div class="rail-foot" id="rail-foot"></div>
+      </header>
+
+      <main id="view" class="view" tabindex="-1"></main>
+    </div>
+
+    <div id="scrim" class="scrim" hidden></div>
+    <aside id="drawer" class="drawer" aria-hidden="true" aria-label="Job details"></aside>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
